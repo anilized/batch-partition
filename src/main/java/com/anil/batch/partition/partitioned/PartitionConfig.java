@@ -43,20 +43,8 @@ public class PartitionConfig {
     @Bean
     public Job updateTicketStatusJob() {
         return new JobBuilder("updateTicketStatusJob", jobRepository)
-                .start(fetchTicketCountStep())
-                .next(partitionStep())
+                .start(partitionStep())
                 .listener(jobExecutionListener())
-                .build();
-    }
-
-    @Bean
-    public Step fetchTicketCountStep() {
-        return new StepBuilder("fetchTicketCountStep", jobRepository)
-                .tasklet((contribution, chunkContext) -> {
-                    long count = ticketRepository.count();
-                    chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().put("ticketCount", count);
-                    return RepeatStatus.FINISHED;
-                }, transactionManager)
                 .build();
     }
 
