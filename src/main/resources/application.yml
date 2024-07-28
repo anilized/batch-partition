@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: "partition-demo"
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/db
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    root: info
